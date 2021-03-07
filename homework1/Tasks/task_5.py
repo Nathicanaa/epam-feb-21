@@ -11,26 +11,35 @@ from typing import List
 
 def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
     """
-    Find subarray with the largest sum that has length k.
-    Based on Kadane's algorithm. Nums array shouldn't be empty and k must be > 0
-    otherwise it will return -1
+    Finds a sub-array with length less or equal to "k", with maximal sum.
+    Args:
+        nums: list of int numbers
+        k: max length of sub-array
+
+    Returns: max sum of sub-array with length <= k
     """
-    best_sum = float("-inf")
-    current_sum = 0
+    current_start = 0
+    best_sum = 0
+    current_sum = None
 
     if not nums or k <= 0:
-        return -1
+        return best_sum
 
-    for current_end, x in enumerate(nums):
+    for i in range(len(nums)):
 
-        if current_sum <= 0:
-            current_sum = x
-            current_start = current_end
+        if current_sum is None:
+            best_sum = nums[i]
+            current_sum = nums[i]
+
+        elif nums[i] > current_sum + nums[i]:
+            current_sum = nums[i]
+            current_start = i
+
         else:
-            current_sum += x
+            current_sum += nums[i]
 
-        if current_end - current_start == k:
-            current_sum -= nums[current_start]
+        if i - current_start == k:
+            current_sum -= nums[i - k]
             current_start += 1
 
         if current_sum > best_sum:

@@ -9,10 +9,16 @@ from typing import List
 
 def check_sum_of_four(a: List[int], b: List[int], c: List[int], d: List[int]) -> int:
     """
-    Returns the count of all tuples (i, j, k, l) there are such that a[i] + b[j] + c[k] + d[l] = 0
     Required that all lists are not empty and have the same length of N where 0 ≤ N ≤ 1000.
     Based on C++ solution at StackOverFlow :
     https://stackoverflow.com/questions/40575323/sum-of-4-integers-in-4-arrays
+    Args:
+        a: list of ints
+        b: list of ints
+        c: list of ints
+        d: list of ints
+
+    Returns: count of all tuples (i, j, k, l) there are such that a[i] + b[j] + c[k] + d[l] = 0
     """
     dct = {}
     cnt = 0
