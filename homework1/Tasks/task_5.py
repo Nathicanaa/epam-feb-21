@@ -23,14 +23,13 @@ def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
     current_sum = None
 
     if not nums or k <= 0:
-        return 0
+        return best_sum
 
     for i in range(len(nums)):
 
         if current_sum is None:
             best_sum = nums[i]
             current_sum = nums[i]
-            current_start = i
 
         elif nums[i] > current_sum + nums[i]:
             current_sum = nums[i]
