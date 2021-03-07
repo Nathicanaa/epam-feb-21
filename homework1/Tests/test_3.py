@@ -14,6 +14,7 @@ from homework1.Tasks.task_3 import find_maximum_and_minimum
         ("1\n2\n3\n4\n5\n", (1, 5)),
         ("-1\n-10\n1000\n0\n", (-10, 1000)),
         ("-1\n-2\n-3\n-100\n", (-100, -1)),
+        ("5\n0\n8\n", (0, 8)),
     ],
 )
 def test_find_maximum_and_minimum(data: str, expected_result: Tuple[int, int]):

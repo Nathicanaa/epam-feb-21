@@ -10,9 +10,14 @@ from typing import Sequence
 
 def is_fibonacci(n: int) -> bool:
     """
-    Checks a single number is a Fib number
+    Checks a single number is it a Fib number
     Look the original code and the explanation at stackoverflow
     https://stackoverflow.com/questions/7472128/check-input-that-belong-to-fibonacci-numbers-in-python
+    Args:
+        n: int number to be checked is it a fib number
+
+    Returns: True if n is a fibonacci number, False otherwise
+
     """
     phi = 0.5 + 0.5 * math.sqrt(5.0)
     a = phi * n
@@ -21,8 +26,13 @@ def is_fibonacci(n: int) -> bool:
 
 def check_fibonacci(data: Sequence[int]) -> bool:
     """
-    The function returns True if data is a Fib numbers, otherwise it returns False.
+    Checks a sequence is it a fib sequence
     The length of Sequence is required to be >= 3 and shouldn't start from 0.
+    Args:
+        data: a sequence of int numbers
+
+    Returns: True if given sequence is a fib numbers, False otherwise
+
     """
     if len(data) < 3 or 0 in data:
         return False
@@ -35,5 +45,4 @@ def check_fibonacci(data: Sequence[int]) -> bool:
         if data[j] > data[j + 1]:
             return False
 
-    for x in range(2, len(data)):
-        return data[x] == data[x - 2] + data[x - 1]
+    return True
