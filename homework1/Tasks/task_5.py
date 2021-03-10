@@ -23,7 +23,7 @@ def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
     current_sum = None
 
     if not nums or k <= 0:
-        return 0
+        return best_sum
 
     for i in range(len(nums)):
 
