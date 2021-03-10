@@ -22,4 +22,4 @@ def is_armstrong(number: int) -> bool:
     Returns: true is the given number is Armstrong number
 
     """
-    return sum(map(lambda x: int(x) ** len(str(number)), str(number))) == number
+    return sum(int(x) ** len(str(number)) for x in str(number)) == number
