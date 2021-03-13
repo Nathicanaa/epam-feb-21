@@ -58,10 +58,9 @@ def cache(times: int) -> Callable:
             Returns: cached data
             """
             nonlocal time_count
-            for key, value in cached.items():
-                if key == args and time_count > 0:
-                    time_count -= 1
-                    return value
+            if args in cached and time_count:
+                time_count -= 1
+                return cached[args]
 
             time_count = times
             cached[args] = function(*args)
