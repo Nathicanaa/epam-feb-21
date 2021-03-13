@@ -33,9 +33,3 @@ def fast_calculate(numbers: Iterable[int]):
     """
     with Pool(processes=60) as pool:
         return sum(pool.map(slow_calculate, numbers))
-
-
-if __name__ == "__main__":
-    start = time.time()
-    fast_calculate(range(500))  # result = 1024259
-    print(time.time() - start)  # ~~ 20-25 sec

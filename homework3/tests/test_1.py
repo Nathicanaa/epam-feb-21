@@ -1,30 +1,10 @@
 # A test fort homework3 task1
 
-from typing import Any, Callable, Tuple
+from unittest import mock
 
 import pytest
 
 from homework3.tasks.task_1 import cache
-
-
-@pytest.mark.parametrize(
-    ["function", "args"],
-    [
-        (lambda a, b: (a ** b) ** 2, (10, 10)),
-        (lambda a, b: a + b + 1, (10, 10)),
-        (lambda a, b: (a.upper, b.upper), ("moscow", "london")),
-    ],
-)
-def test_cached(function: Callable, args: Tuple[Any]):
-    """passes test if cached objects are equal( x == y ),
-    this test if from homework2"""
-
-    @cache(times=2)
-    def some(func):
-        return func
-
-    cached = some(function)
-    assert cached(*args) == cached(*args)
 
 
 def test_times_cache_decor():
@@ -33,30 +13,35 @@ def test_times_cache_decor():
     """
 
     @cache(times=2)
-    def cheching_times():
+    def checking_times():
         return x
 
     x = 0
-    zero = cheching_times()
+    zero = checking_times()
 
     x = 1
-    first = cheching_times()
+    first = checking_times()
 
     x = 2
-    second = cheching_times()
+    second = checking_times()
 
     x = 3
-    third = cheching_times()
+    third = checking_times()
 
-    assert zero == first == second
-    assert second != third
-
-
-@cache(times=2)
-def f(a: int):
-    return a * a
+    assert zero is first is second
+    assert second is not third
 
 
-def test_cache_decorator_error():
-    with pytest.raises(TypeError):
-        assert f(3) is f() is f() is f()
+def test_value_error_for_cache():
+    """
+    Passes if raises ValueError with times < 1
+    """
+    with pytest.raises(ValueError) as exc:
+
+        @cache(times=-1)
+        def some(x):
+            return x
+
+        some("some")
+
+    assert str(exc.value) == "Times must be equal at least to 1"

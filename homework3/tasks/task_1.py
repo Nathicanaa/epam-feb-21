@@ -25,57 +25,49 @@ def f():
 from typing import Any, Callable
 
 
-def cache(times: int = 3) -> Callable:
+def cache(times: int) -> Callable:
     """
     Modifying caching function with a param
     Args:
+
         times: int count of times giving cache out
 
     Returns: parametrized decorator
-
     """
-    cached = {}
-    timing = times
-    if timing < 1:
-        raise ValueError("Times must equals at least to 1 ")
+    if times < 1:
+        raise ValueError("Times must be equal at least to 1")
 
-    def decor(function: Callable):
+    def decorate(function: Callable) -> Callable:
         """
         A body of decorator
         Args:
             function: some function to be decorated
-
         Returns: decorated func
-
         """
+        cached = {}
+        time_count = times
 
-        def wrap(*args: Any, **kwargs: Any):
+        def wrap(*args: Any) -> Any:
             """
-            Takes args and kwargs to return cached data, count times of
+            Takes args to return cached data, count times of
             giving cache out
             Args:
+
                 *args: pos args
-                **kwargs: key args
 
             Returns: cached data
-
             """
-            spell = str(*args, **kwargs)
-            nonlocal timing
+            nonlocal time_count
+            for key, value in cached.items():
+                if key == args and time_count > 0:
+                    time_count -= 1
+                    return value
 
-            if spell in cached:
-                data = cached[spell]
+            time_count = times
+            cached[args] = function(*args)
 
-                if timing == 1:
-                    del cached[spell]
-                timing -= 1
-                return data
-
-            data = function(*args, **kwargs)
-            timing = times
-            cached[spell] = data
-            return data
+            return cached[args]
 
         return wrap
 
-    return decor
+    return decorate
