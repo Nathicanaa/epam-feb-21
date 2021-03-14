@@ -30,4 +30,3 @@ def fizzbuzz(n: int) -> Generator:
             yield "Fizz" * (i % 3 < 1) + (i % 5 < 1) * "Buzz" or str(i)
     except TypeError:
         raise TypeError("N must be an integer!")
-
