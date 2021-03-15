@@ -35,7 +35,7 @@ def test_read_magic_number(data: str, expected_result: bool):
     [
         ("data", ValueError),
         ("6u7u9i00", ValueError),
-        ("===+++===", ValueError),
+        ("===123sad==", ValueError),
     ],
 )
 def test_read_magic_number_no_numeric_data(data: str, expected_result: Exception):
@@ -46,10 +46,10 @@ def test_read_magic_number_no_numeric_data(data: str, expected_result: Exception
     with NamedTemporaryFile(mode="w+", delete=False) as file:
         file.write(data)
         file.seek(0)
-        with pytest.raises(expected_result):
+        with pytest.raises(expected_result, match=f"Data {data} has wrong format"):
             read_magic_number(file.name)
 
 
 def test_read_magic_number_file_does_not_exist():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="File doesn't exist!"):
         read_magic_number(fake_path)

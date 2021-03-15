@@ -21,7 +21,6 @@ You will learn:
 *** https://docs.python.org/3/tutorial/errors.html#handling-exceptions
 **** https://docs.python.org/3/tutorial/errors.html#raising-exceptions
 """
-import os
 
 
 def read_magic_number(path: str) -> bool:
@@ -33,15 +32,12 @@ def read_magic_number(path: str) -> bool:
 
     Returns: true if the first line of the file is number which is >= 1 and <3
     false otherwise
-    If file doesn't exist ValueError will be raised
-
     """
-    if os.path.exists(path):
+    try:
         with open(path, "r", encoding="utf-8") as fi:
-            try:
-                data = fi.readline().strip()
-                return 1 <= float(data) < 3
-            except ValueError:
-                raise ValueError(f"Data {data} has wrong format!")
-
-    raise ValueError(f"Path {path} does not exist!")
+            data = fi.readline().strip()
+            return 1 <= float(data) < 3
+    except FileNotFoundError:
+        raise ValueError("File doesn't exist!")
+    except ValueError:
+        raise ValueError(f"Data {data} has wrong format")
