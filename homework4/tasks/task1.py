@@ -33,18 +33,15 @@ def read_magic_number(path: str) -> bool:
 
     Returns: true if the first line of the file is number which is >= 1 and <3
     false otherwise
+    If file doesn't exist ValueError will be raised
 
     """
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as fi:
-            data = fi.readline().strip()
-            no_comma_data = data.replace(",", ".")
-            no_dot_data = no_comma_data.replace(".", "")
-            no_dot_and_minus = no_dot_data.replace("-", "")
+            try:
+                data = fi.readline().strip()
+                return 1 <= float(data) < 3
+            except ValueError:
+                raise ValueError(f"Data {data} has wrong format!")
 
-            if no_dot_and_minus.isdigit():
-                return 1 <= float(no_comma_data) < 3
-
-            raise ValueError("Data is not numeric")
-
-    raise ValueError("File not found")
+    raise ValueError(f"Path {path} does not exist!")

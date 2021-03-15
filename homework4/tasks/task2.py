@@ -36,4 +36,4 @@ def count_dots_on_i(url: str) -> int:
         data = res.read().decode("utf-8")
         return data.count("i")
     except (HTTPError, URLError):
-        raise ValueError("Unreachable {url}")
+        raise ValueError(f"Unreachable {url}")

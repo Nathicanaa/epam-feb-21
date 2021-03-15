@@ -57,12 +57,12 @@ def fizzbuzz(n: int) -> List[str]:
     ValueError: N must be an integer!
     """
     if not isinstance(n, int):
-        raise TypeError("N must be an integer!")
+        raise TypeError(f"N {n} must be an integer!")
 
     fuzz_lst = []
     for i in range(1, n + 1):
-        if i % 5 == 0 and i % 3 == 0:
-            fuzz_lst.append("Fizz Buzz")
+        if not i % 15:
+            fuzz_lst.append("FizzBuzz")
         elif i % 3 == 0:
             fuzz_lst.append("Fizz")
         elif i % 5 == 0:

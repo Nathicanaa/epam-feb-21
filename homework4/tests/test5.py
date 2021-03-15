@@ -46,5 +46,5 @@ def test_fizzbuzz_error(data: str, expected_exception: Exception):
     """
     Passes if fizzbuzz raises TypeError
     """
-    with pytest.raises(TypeError, match="N must be an integer!"):
+    with pytest.raises(TypeError, match=f"N {data} must be an integer!"):
         list(fizzbuzz(data))

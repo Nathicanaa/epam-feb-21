@@ -35,5 +35,5 @@ def test_negative_count_dots_on_i(mock_urlopen):
     """
     my_mock1 = MagicMock()
     mock_urlopen.side_effect = HTTPError("http://mokc_url.su", 404, "Error", {}, None)
-    with pytest.raises(ValueError, match="Unreachable {url}"):
+    with pytest.raises(ValueError):
         count_dots_on_i(my_mock1)

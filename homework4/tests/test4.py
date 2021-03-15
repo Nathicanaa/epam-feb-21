@@ -27,7 +27,7 @@ from homework4.tasks.task4 import fizzbuzz
                 "Fizz",
                 "13",
                 "14",
-                "Fizz Buzz",
+                "FizzBuzz",
             ],
         ),
         (0, []),
@@ -46,5 +46,5 @@ def test_fizzbuzz_error(data: str, expected_exception: Exception):
     """
     Passes if fizzbuzz raises TypeError
     """
-    with pytest.raises(TypeError, match="N must be an integer!"):
+    with pytest.raises(TypeError, match=f"N {data} must be an integer!"):
         fizzbuzz(data)

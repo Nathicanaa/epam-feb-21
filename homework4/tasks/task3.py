@@ -28,7 +28,6 @@ def my_precious_logger(text: str) -> None:
     Returns: func doesn't return anything, just prints in stdout/stderr
 
     """
-    if text.startswith("error"):
-        print(text, file=sys.stderr)
-    else:
-        print(text, file=sys.stdout)
+    print(text, file=sys.stderr) if text.startswith("error") else print(
+        text, file=sys.stdout
+    )
