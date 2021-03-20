@@ -105,10 +105,9 @@ class Student:
         Returns: None if homework is not active anymore, otherwise returns
         incoming Homework object
         """
-        if not hw_obj.is_active():
-            print("You are late")
-            return None
-        return hw_obj
+        if hw_obj.is_active():
+            return hw_obj
+        print("You are late")
 
 
 class Teacher:
