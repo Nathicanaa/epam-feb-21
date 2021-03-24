@@ -49,7 +49,7 @@ def test_teacher_create_homework_method():
     """
     Passes if Homework instances created correctly
     """
-    assert (type(oop_hw), type(docs_hw)) == (Homework, Homework)
+    assert (isinstance(oop_hw, Homework), isinstance(docs_hw, Homework)) == (True, True)
     assert (oop_hw.text, oop_hw.deadline) == ("Learn OOP", timedelta(1))
     assert (docs_hw.text, docs_hw.deadline) == ("Read docs", timedelta(5))
 
@@ -67,10 +67,14 @@ def test_homeworkresult_init():
     """
     Passes if Student's method do_homework() returns HomeworkResult instances
     """
-    assert (type(result_1), type(result_2), type(result_3)) == (
-        HomeworkResult,
-        HomeworkResult,
-        HomeworkResult,
+    assert (
+        isinstance(result_1, HomeworkResult),
+        isinstance(result_2, HomeworkResult),
+        isinstance(result_3, HomeworkResult),
+    ) == (
+        True,
+        True,
+        True,
     )
 
 

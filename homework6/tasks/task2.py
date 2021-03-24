@@ -225,7 +225,7 @@ class Teacher(Human):
         Args:
             homework: a Homework object to be deleted from homework_done
         """
-        if homework is None:
+        if not homework:
             cls.homework_done.clear()
         else:
             del cls.homework_done[homework]

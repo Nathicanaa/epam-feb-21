@@ -35,31 +35,35 @@ def instances_counter(cls):
     Returns: decorated class with 2 new methods get_created_instances and reset_instances_counter
 
     """
-    setattr(cls, "counter", 0)
+    setattr(cls, "counter_", 0)
 
-    def __init__(self, *args, **kwargs):
+    def __new__(cls, *args, **kwargs) -> cls:
         """
-        Modified constructor which increases counter with every init of new instance
+        Modified constructor which increases counter with every creation of new instance
+        Args:
+            cls: decorated class
+            *args: pos args
+            **kwargs: keyword args
+        Returns: new object of a class
         """
-        cls.counter += 1
-        self.args = args
-        self.kwargs = kwargs
+        cls.counter_ += 1
+        return super(cls, cls).__new__(cls)
 
     def get_created_instances(self=None) -> int:
         """
         Returns: current state of counter
         """
-        return cls.counter
+        return cls.counter_
 
     def reset_instances_counter(self=None) -> int:
         """
         Returns: last state of counter and resets it to 0
         """
-        before_reset = cls.counter
-        cls.counter = 0
+        before_reset = cls.counter_
+        cls.counter_ = 0
         return before_reset
 
-    setattr(cls, "__init__", __init__)
+    setattr(cls, "__new__", __new__)
     setattr(cls, "get_created_instances", get_created_instances)
     setattr(cls, "reset_instances_counter", reset_instances_counter)
 
