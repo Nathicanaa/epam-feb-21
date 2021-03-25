@@ -39,9 +39,6 @@ def remove_sharps(word: str) -> str:
     for char in word:
         if char != "#":
             stack.append(char)
-        else:
-            if stack:
-                stack.pop()
-            else:
-                continue
+        elif stack:
+            stack.pop()
     return "".join(stack)

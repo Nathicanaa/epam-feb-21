@@ -52,9 +52,7 @@ def win_checker(win_lines: List[Any]) -> str:
             return combination[0]
         if "-" in combination:
             flag = True
-    if flag:
-        return UNFINISHED
-    return DRAW
+    return UNFINISHED if flag else DRAW
 
 
 def tic_tac_toe_checker(board: List[List]) -> str:
@@ -68,8 +66,4 @@ def tic_tac_toe_checker(board: List[List]) -> str:
     """
     lines = win_lines_maker(board)
     result = win_checker(lines)
-    if result == DRAW:
-        return f"{DRAW}"
-    if result == UNFINISHED:
-        return f"{UNFINISHED}"
-    return f"{result} wins!"
+    return f"{result}" if result in (DRAW, UNFINISHED) else f"{result} wins!"
