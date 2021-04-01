@@ -71,6 +71,7 @@ def test_iter_books_positive():
     """
     Passes if iter implementation works correctly
     """
+    iter(books)
     assert next(books) == {"name": "Farenheit 451", "author": "Bradbury"}
     assert next(books) == {"name": "Brave New World", "author": "Huxley"}
     assert next(books) == {"name": "1984", "author": "Orwell"}

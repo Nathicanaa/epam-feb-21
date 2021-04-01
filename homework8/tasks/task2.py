@@ -68,14 +68,9 @@ class TableData:
         Args:
             db_name: name of database
             table_name: name of table into database
-        Init:
-            self.columns: tuple of column names in table
-            self.row: all rows of given table
         """
         self.db_name = db_name
         self.table_name = table_name
-        self.columns = self.__take_column_names()
-        self.rows = self.__connect(f"SELECT * FROM {self.table_name}")
 
     def __len__(self) -> int:
         """
@@ -96,7 +91,7 @@ class TableData:
         """
         cur = self.__connect(f"SELECT * FROM {self.table_name} WHERE name='{name}'")
         if row := cur.fetchone():
-            return dict(zip(self.columns, row))
+            return dict(zip(self.__take_column_names(), row))
         raise KeyError(f"Name {name} doesn't exist in {self.table_name} table!")
 
     def __contains__(self, name: str) -> bool:
@@ -112,15 +107,20 @@ class TableData:
     def __iter__(self) -> Iterator:
         """
         Magic method to implement iteration protocol
+        self.n : helper variable for __next__ dunder method
             Returns: object itself
         """
+        self.n = 0
         return self
 
     def __next__(self) -> Optional[dict]:
         """
         Another magic method to implement iteration protocol
-        Returns: next row of object
+        Returns: next row of an object
         """
-        if row := self.rows.fetchone():
-            return dict(zip(self.columns, row))
+        rows = tuple(self.__connect(f"SELECT * FROM {self.table_name}"))
+        while len(self) > self.n:
+            result = rows[self.n]
+            self.n += 1
+            return dict(zip(self.__take_column_names(), result))
         raise StopIteration

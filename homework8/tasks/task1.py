@@ -26,7 +26,7 @@ def check(line: str) -> bool:
         line: some string
     Returns: true if line is valid false otherwise
     """
-    return True if not iskeyword(line) and line.isidentifier() else False
+    return not iskeyword(line) and line.isidentifier()
 
 
 class KeyValueStorage:
@@ -35,8 +35,6 @@ class KeyValueStorage:
     if a key is valid then pair (key, value) will be added to dct.
     Providing access to dict value through attributes and by dict[key] method
     """
-
-    dct = defaultdict(dict)
 
     def __init__(self, path: str):
         """
@@ -48,6 +46,7 @@ class KeyValueStorage:
         Args:
             path: a path to a file
         """
+        self.dct = defaultdict(dict)
         with open(path, "r+", encoding="utf-8") as file:
             pairs = [pair.split("=") for pair in file.read().split()]
         for key, value in pairs:
@@ -69,7 +68,7 @@ class KeyValueStorage:
         Raises: AttributeError if key not in dct
         """
         if key not in self.dct:
-            raise AttributeError(f"Attribute {key} doesn't exist!")
+            raise AttributeError(f"Key {key} doesn't exist!")
         return self.dct[key]
 
     def __getitem__(self, key: str) -> Optional[Dict]:
@@ -82,5 +81,5 @@ class KeyValueStorage:
         Raises: AttributeError if key not in dct
         """
         if key not in self.dct:
-            raise AttributeError(f"Attribute {key} doesn't exist!")
+            raise AttributeError(f"Key {key} doesn't exist!")
         return self.dct[key]

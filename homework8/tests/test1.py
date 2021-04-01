@@ -24,10 +24,10 @@ def test_KeyValueStorage(data):
         file.write(data)
         file.seek(0)
     first = KeyValueStorage(file.name)
-    assert first.name == first["name"] == KeyValueStorage.dct["name"]
-    assert first.last_name == first["last_name"] == KeyValueStorage.dct["last_name"]
-    assert first.power == first["power"] == KeyValueStorage.dct["power"]
-    assert first.song == first["song"] == KeyValueStorage.dct["song"]
+    assert first.name == first["name"]
+    assert first.last_name == first["last_name"]
+    assert first.power == first["power"]
+    assert first.song == first["song"]
     assert isinstance(first.power, int) is True
 
 
