@@ -68,7 +68,7 @@ class KeyValueStorage:
         Raises: AttributeError if key not in dct
         """
         if key not in self.dct:
-            raise AttributeError(f"Key {key} doesn't exist!")
+            raise AttributeError(f"Attribute {key} doesn't exist!")
         return self.dct[key]
 
     def __getitem__(self, key: str) -> Optional[Dict]:
