@@ -1,11 +1,12 @@
 # A test for homework9 task1
 from itertools import chain
+from pathlib import Path
 from random import randint
 from tempfile import NamedTemporaryFile
 
 import pytest
 
-from homework9.tasks.task1 import merge_sorted_files
+from homework9.tasks.task1 import merge_sorted_files, SortingError
 
 
 @pytest.mark.parametrize(
@@ -55,3 +56,55 @@ def test_merge_sorting_many_arrays():
     assert list(
         merge_sorted_files([file1.name, file2.name, file3.name, file4.name, file5.name])
     ) == sorted(chain(*list_of_lists))
+
+
+def test_wrong_path_merge_sorted_arrays():
+    """
+    Passes if TypeError was raised because of wrong str path
+    """
+    wrong_path1 = "/some/wrong/path"
+    wrong_path2 = "anothe/wrong/path"
+    with pytest.raises(TypeError):
+        merge_sorted_files([wrong_path1, wrong_path2])
+
+
+def test_wrong_path_merge_sorted_arrays_2():
+    """
+    Passes if TypeError was raised because of wrong path in Path object
+    """
+    x = Path("wrong")
+    y = Path("path")
+    with pytest.raises(TypeError):
+        merge_sorted_files([x, y])
+
+
+def test_wrong_values_merge_sorted_arrays():
+    """
+    Passes if ValueError was raised to non-int values into given files
+    """
+    data1 = "1\ndata\n5\n"
+    data2 = "one\n10\n20\n"
+    with NamedTemporaryFile(mode="w+", delete=False) as file1:
+        file1.write(data1)
+        file1.seek(0)
+    with NamedTemporaryFile(mode="w+", delete=False) as file2:
+        file2.write(data2)
+        file2.seek(0)
+    with pytest.raises(ValueError):
+        merge_sorted_files([file1.name, file2.name])
+
+
+def test_unsorted_arrays_merge_sorted_arrays():
+    """
+    Passes if SortingError was raised to unsorted arrays into given files
+    """
+    data1 = "1\n3\n5\n"
+    data2 = "100\n10\n20\n"
+    with NamedTemporaryFile(mode="w+", delete=False) as file1:
+        file1.write(data1)
+        file1.seek(0)
+    with NamedTemporaryFile(mode="w+", delete=False) as file2:
+        file2.write(data2)
+        file2.seek(0)
+    with pytest.raises(SortingError):
+        merge_sorted_files([file1.name, file2.name])

@@ -16,17 +16,67 @@ from pathlib import Path
 from typing import Generator, Iterator, List, Union
 
 
-def get_yield_from_file(file: Union[Path, str]) -> Generator:
+class SortingError(Exception):
+    """Exception to be raised if an array is not sorted"""
+
+    pass
+
+
+def check_sorting(array: List) -> bool:
     """
-    Takes a file and yields element by element integers from the file
-    According to task description file containing sorted array of ints
+    Checks list for sorting
     Args:
-        file: a path to the file in str or pathlib.Path
+        array: some list
+    Returns: true if list is sorted otherwise false
+    """
+    return array == sorted(array)
 
-    Yields: int element of file one by one
 
+def check_path(path: Union[str, Path]) -> bool:
+    """
+    Checks path for being an instance of Path class and after that
+    checks for existing and being a file
+    If path not a Path instance then func converts it to Path type
+    and checks for the same states as above
+    Args:
+        path: str path or Path instance
+    Returns: true if path is a file and exists
+    """
+    if isinstance(path, Path):
+        return path.exists() and path.is_file()
+
+    return Path(path).is_file() and Path(path).exists()
+
+
+def check_integers(file: Union[str, Path]) -> bool:
+    """
+    Checks file for containing only integer numbers
+    Args:
+        file: str path or Path instance
+    Returns: true if file contains only integers otherwise false
     """
     with open(file, encoding="utf-8") as f:
+        return all(line.strip().isdigit() for line in f)
+
+
+def get_yield_from_file(path: Union[Path, str]) -> Generator:
+    """
+    Takes a file and yields element by element integers from the file
+    if file exists and containing integers only
+    Args:
+        path: a path to the file in str or pathlib.Path
+    Raises:
+        TypeError if file doesn't exist or path to this path is incorrect
+        ValueError if file doesn't contain integers only
+    Yields: int element of file one by one
+    """
+    if not check_path(path):
+        raise TypeError(f"path {path} is incorrect or searched file doesn't exist!")
+
+    if not check_integers(path):
+        raise ValueError(f"The file {path} doesn't contain integers only!")
+
+    with open(path, encoding="utf-8") as f:
         for line in f:
             yield int(line.strip())
 
@@ -38,8 +88,10 @@ def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
     Returns an iterator over the sorted values
     Args:
         file_list: collection of files containing sorted arrays
-
     Returns: result of sorting arrays
-
     """
+    for el in file_list:
+        if not check_sorting(list(get_yield_from_file(el))):
+            raise SortingError(f"File {el} has unsorted array!")
+
     return heapq.merge(*[get_yield_from_file(file) for file in file_list])
