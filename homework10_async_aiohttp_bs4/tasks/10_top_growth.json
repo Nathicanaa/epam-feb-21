@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Tesla",
+    "code": "TSLA",
+    "growth": 496.68
+  },
+  {
+    "name": "L Brands",
+    "code": "LB",
+    "growth": 367.02
+  },
+  {
+    "name": "Freeport-McMoRan",
+    "code": "FCX",
+    "growth": 361.21
+  },
+  {
+    "name": "Enphase Energy",
+    "code": "ENPH",
+    "growth": 350.68
+  },
+  {
+    "name": "Gap",
+    "code": "GPS",
+    "growth": 342.19
+  },
+  {
+    "name": "Expedia",
+    "code": "EXPE",
+    "growth": 209.15
+  },
+  {
+    "name": "MGM Resorts International",
+    "code": "MGM",
+    "growth": 205.14
+  },
+  {
+    "name": "Marathon Oil",
+    "code": "MRO",
+    "growth": 203.53
+  },
+  {
+    "name": "News",
+    "code": "NWSA",
+    "growth": 202.16
+  },
+  {
+    "name": "United Rentals",
+    "code": "URI",
+    "growth": 201.9
+  }
+]
