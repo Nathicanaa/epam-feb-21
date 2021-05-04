@@ -84,6 +84,10 @@ class Homework(Base):
 
     @property
     def is_active(self) -> bool:
+        """
+        Checks homework for being expired
+        Returns: True if homework is active, False otherwise
+        """
         return self.created + timedelta(self.deadline) > datetime.today()
 
     def __repr__(self) -> str:

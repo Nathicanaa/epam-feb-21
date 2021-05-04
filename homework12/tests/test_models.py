@@ -1,12 +1,7 @@
 # A test for homework12 models
 # For all Homework instances 'created' attr was created manually because it
 # wont be generated automatically until instances aren't committed to a Session
-
-import pprint
-import sys
 from datetime import datetime
-
-pprint.pprint(sys.path)
 
 from homework12.models import Homework, HomeworkResult, Student, Teacher
 

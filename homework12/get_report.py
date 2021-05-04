@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 from models import HomeworkResult
 from session_scope import session_scope
 
+FILE_CSV = "tests/get_report.csv"
+
 
 def get_data() -> "sqlalchemy.query":
     """
@@ -19,16 +21,13 @@ def write_to_csv() -> None:
     Takes a query with all rows in the table "Homework_results", filters expired homeworks
     and writes it to a csv file 'get_report.csv'
     """
-    with open("tests/get_report.csv", "w", encoding="utf-8") as file:
+    with open(FILE_CSV, "w", encoding="utf-8") as file:
         file_writer = csv.writer(file, lineterminator="\r")
         file_writer.writerow(
             ["Student", "Homework creating date", "Teacher", "Homework text"]
         )
         for row in get_data():
-            if (
-                row.homework.created + timedelta(row.homework.deadline)
-                > datetime.today()
-            ):
+            if row.homework.is_active:
                 file_writer.writerow(
                     [
                         row.student,
